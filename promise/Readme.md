@@ -45,7 +45,7 @@ promise.then(function(data){
 ```
 
 
-## 2.1 [Promise 新建之后就会立即执行](./promise.html)。
+### 2.1 [Promise 新建之后就会立即执行](./promise.html)。
 ```
     let promise = new Promise(function(resolve, reject) {
       console.log('Promise');
@@ -63,7 +63,7 @@ promise.then(function(data){
     // resolved    //Promise.resolve()在本轮"事件循环"结束时最后执行，所以在console.log("Hi")之后执行。
 
  ```
-## 2.2 [Promise包装一个图片异步加载：](./loadImage.html)
+### 2.2 [Promise包装一个图片异步加载：](./loadImage.html)
 ```
 function loadImageAsync(url) {
   return new Promise(function(resolve, reject) {
@@ -84,7 +84,7 @@ function loadImageAsync(url) {
 ```
 如果图片加载成功，执行resolve，如果失败则执行reject.
 
-## 2.3 [Promise 对象实现Ajax操作](./promiseAjax.html)：
+### 2.3 [Promise 对象实现Ajax操作](./promiseAjax.html)：
 
 
 	 const getJSON = function (url) {
@@ -135,7 +135,7 @@ function loadImageAsync(url) {
 如果调用resolve函数和reject函数时带有参数，那么它们的参数会被传递给回调函数。reject函数的参数通常是Error对象的实例，表示抛出的错误；
 注意：如果then里不return Promise对象实例，后面的then或者finally将会按照同步顺序执行，如果有返回Promise状态，则会等待状态变化后再执行。   
   
-## 2.4 [resolve函数的参数除了正常的值外，还可能是另外一个Promise实例](./resolve(promise).html)：
+### 2.4 [resolve函数的参数除了正常的值外，还可能是另外一个Promise实例](./resolve(promise).html)：
 
     const p1 = new Promise(function (resolve, reject) {
         console.log("p1")
@@ -154,7 +154,7 @@ function loadImageAsync(url) {
         .catch(error => console.log(error))
       
 
-### 注意，调用resolve或reject并不会终结 Promise 的参数函数的执行。
+#### 注意，调用resolve或reject并不会终结 Promise 的参数函数的执行。
 
 	new Promise((resolve, reject) => {
 	resolve(1);
