@@ -45,7 +45,7 @@ promise.then(function(data){
 ```
 
 
-## 3、[Promise 新建之后就会立即执行](./promise.html)。
+## 2.1 [Promise 新建之后就会立即执行](./promise.html)。
 ```
     let promise = new Promise(function(resolve, reject) {
       console.log('Promise');
@@ -63,7 +63,7 @@ promise.then(function(data){
     // resolved    //Promise.resolve()在本轮"事件循环"结束时最后执行，所以在console.log("Hi")之后执行。
 
  ```
-## 4、[Promise包装一个图片异步加载：](./loadImage.html)
+## 2.2 [Promise包装一个图片异步加载：](./loadImage.html)
 ```
 function loadImageAsync(url) {
   return new Promise(function(resolve, reject) {
@@ -84,7 +84,7 @@ function loadImageAsync(url) {
 ```
 如果图片加载成功，执行resolve，如果失败则执行reject.
 
-## [Promise 对象实现Ajax操作](./promiseAjax.html)：
+## 2.3 [Promise 对象实现Ajax操作](./promiseAjax.html)：
 
 
 	 const getJSON = function (url) {
@@ -135,7 +135,7 @@ function loadImageAsync(url) {
 如果调用resolve函数和reject函数时带有参数，那么它们的参数会被传递给回调函数。reject函数的参数通常是Error对象的实例，表示抛出的错误；
 注意：如果then里不return Promise对象实例，后面的then或者finally将会按照同步顺序执行，如果有返回Promise状态，则会等待状态变化后再执行。   
   
-## 5、[resolve函数的参数除了正常的值外，还可能是另外一个Promise实例](./resolve(promise).html)：
+## 2.4 [resolve函数的参数除了正常的值外，还可能是另外一个Promise实例](./resolve(promise).html)：
 
     const p1 = new Promise(function (resolve, reject) {
         console.log("p1")
@@ -176,7 +176,7 @@ function loadImageAsync(url) {
 	})
 
 
-## 6、 [Promise.prototype.then()](./promise.then.html)
+## 3、 [Promise.prototype.then()](./promise.then.html)
 Promise实例具有`then`方法，也就是说，`then`方法定义在原型对象Promise.prototype上的。它的作用是为Promise实例添加状态改变时的回调函数。前面说过，`then`方法的第一个参数是	`resolved`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数。   
 `then`方法返回的是一个新的`Promise`实例（不是原来那个Promise实例）。因此可以采用链式写法，即`then`方法后面再调用一个`then`方法。
 
@@ -216,7 +216,7 @@ Promise实例具有`then`方法，也就是说，`then`方法定义在原型对�
 
 以上的代码使用`then`方法，依次指定了3个回调函数。第一个回调函数执行完成后，会讲return返回的结果作为参数，传入第二个回调函数。第二个回调函数又新建了一个Promise，并且resolve/reject传出新的结果,所以第三个then函数要等第二个then回调函数返回的Promise对象的状态发生变化，才会被调用，而且接收resolve/reject传出的结果作为参数。   
   
-## 7、[Promise.prototype.catch()](./promise.catch.html)
+## 4、[Promise.prototype.catch()](./promise.catch.html)
 Promise.prototype.catch方法是,then(null,rejection)的别名，用于指定发生错误时的回调函数。
 
 	const p = new Promise(function (resolve,reject) {
@@ -274,7 +274,7 @@ Promise 对象的错误具有“冒泡”性质，会一直向后传递，直到
 
 所以，一般来说，不要在`then`方法里定义Reject状态的回调函数（即`then`的第二个参数），总是使用`catch`的方法捕获错误。
 
-## 8、[ Promise.prototype.finally()](./promise.finally.html)
+## 5、[ Promise.prototype.finally()](./promise.finally.html)
 `finally`方法用于指定管Promise对象最后的状态如果，都会执行的操作。该方法是ES2018引入标准的。   
 
 	promise
@@ -282,7 +282,7 @@ Promise 对象的错误具有“冒泡”性质，会一直向后传递，直到
 	.catch(error => {···})
 	.finally(() => {···});
 
-## 9、[Promise.all();](./promise.all.html)
+## 6、[Promise.all();](./promise.all.html)
 Promise.all方法用于将多个Promise实例包装成一个新的Promise实例对象。
 
 	 const p = Promise.all([p1,p2,p3]);
@@ -316,11 +316,11 @@ Promise.all方法用于将多个Promise实例包装成一个新的Promise实例�
 当然，如果p2没有自己的`catch`方法，就会调用`Promise.all()`的`catch`方法。
   
   
-## 10、 [Promise.race()](./promise.race.html)
+## 7、 [Promise.race()](./promise.race.html)
 Promise.race方法同样是将多个Promise实例包装成一个新的Promise实例。
 和Promise.all的区别是，只要数组里面的一个实例的状态发生改变，新Promise实例的状态就会跟着改变。那个率先改变的Promise实例返回的值，就传递给新实例的回调函数。
 
-## 11、Promise.resolve()
+## 8、Promise.resolve()
 有时需要将现有对象转为Promise对象，Promise.resolve方法就起到这个作用。
 
 	const jsPromise = Promise.resolve($.ajax('/whatever.json'));
@@ -401,7 +401,7 @@ Promise.resolve方法允许调用时不带参数，直接返回一个resolved状
 
 
 
-## 12、[Generator 函数与 Promise 的结合](./promise.generator.html)
+## 9、[Generator 函数与 Promise 的结合](./promise.generator.html)
 
 
 使用 Generator 函数管理流程，遇到异步操作的时候，通常返回一个Promise对象。  
