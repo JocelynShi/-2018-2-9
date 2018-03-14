@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+    <script type="text/javascript">
+     /*  var p1  = new Promise(function (resolve,reject) {
+           setTimeout(function () {
+               console.log("p1")
+               resolve("第一个promise执行完毕")
+           },5000)
+       });
+       
+       var p2 = new Promise(function (resolve,reject) {
+           setTimeout(function () {
+               console.log("p2")
+              /!* resolve("第二个promise执行完毕")*!/
+              reject("第二个promise拒绝了")
+           },10000)
+       })
+       var p3 = new Promise(function (resolve,reject) {
+           setTimeout(function () {
+               console.log("p3")
+               resolve("第三个promise执行完毕")
+           },15000)
+       })
+        const p = Promise.all([p1,p2,p3]);
+       p.then(function (data) {
+          // console.log(data); //当p1,p2,p3都执行完毕之后才会执行
+       },function (err) {
+           console.log("error"); //当数组p1,p2,p3任何一个执行reject时，就会把这个状态传给p.但是p1，p2,p3都会执行完毕。
+       })*/
+
+
+//注意，如果作为参数的Promise实例，自己定义了catch方法，那么它一旦被`rejected`,并不会触发Promise.all()的catch方法。
+       const p1 = new Promise((resolve, reject) => {
+           resolve('hello');
+       })
+           .then(result => result)
+           .catch(e => e);
+
+       const p2 = new Promise((resolve, reject) => {
+           throw new Error('报错了');
+       })
+           .then(result => result)
+           .catch(e => e);
+
+       Promise.all([p1, p2])
+           .then(result => console.log(result))
+           .catch(e => console.log(e));
+       // ["hello", Error: 报错了]
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

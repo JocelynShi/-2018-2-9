@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>promise 学习笔记</title>
+	<script type="text/javascript">
+		window.onload= function () {
+			function pms1() {
+				return new Promise(function (resolve,reject) {
+					setTimeout(function () {
+						console.log("执行任务1");
+						resolve("执行任务1成功");
+					},2000)
+				})
+			}
+			function pms2() {
+				return new Promise(function (resolve,reject) {
+						setTimeout(function () {
+							console.log("执行任务2");
+							resolve("执行任务2成功")
+						},2000)
+				})
+			}
+			function pms3() {
+				return new Promise( function (resolve,reject) {
+					setTimeout(function () {
+						console.log("执行任务3");
+						resolve("执行任务3成功")
+					},2000)
+				})
+			}
+
+			Promise.all([pms1(),pms2(),pms3()]).then(function (data) {
+				console.log(data);
+				console.log({}.toString.call(data));
+			})
+		}
+	</script>
+</head>
+<body>
+
+</body>
+</html>

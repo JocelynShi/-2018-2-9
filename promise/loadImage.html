@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+</head>
+
+<body>
+<div id="img-container"></div>
+<script type="text/javascript">
+    loadImageAsync("http://img95.699pic.com/photo/40010/6694.jpg_wh860.jpg");
+    function loadImageAsync(url) {
+        return new Promise(function(resolve, reject) {
+            const image = new Image();
+            console.log("imageCreated:",image);
+
+            image.onload = function() {
+                console.log("image was loaded successfully");
+                resolve(image);
+            };
+
+            image.onerror = function() {
+                console.log("image was fail to load");
+                reject(new Error('Could not load image at ' + url));
+            };
+
+            image.src = url;
+            console.log("image:",image);
+        const container = document.getElementById("img-container");
+            container.appendChild(image);
+        });
+    }
+    //imageCreated: <img src=​"http:​/​/​img95.699pic.com/​photo/​40010/​6694.jpg_wh860.jpg">​
+    //image: <img src=​"http:​/​/​img95.699pic.com/​photo/​40010/​6694.jpg_wh860.jpg">​
+    //image was loaded successfully
+    //注意:虽然image.src 写在了console.log("imageCreated:",image);之后，但是还是获取了图片地址。
+
+</script>
+</body>
+
+</html>

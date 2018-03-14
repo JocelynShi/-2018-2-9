@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+</head>
+
+<body>
+<script type="text/javascript">
+    const p = new Promise(function (resolve, reject) {
+        if (1 === 2) {
+            resolve("ok")
+        } else {
+            reject(new Error("出错了"))
+        }
+    });
+    p.then(function (data) {
+        console.log(data);
+    }).catch(function (err) {
+        console.error(err);
+    });
+
+    //Promise 对象的错误具有“冒泡”性质，会一直向后传递，直到被捕获为止。也就是说，错误总是会被下一个catch语句捕获。
+    const p2 = new Promise(function (resolve, reject) {
+        if (1 === 1) {
+            resolve("ok")
+        } else {
+            reject(new Error("出错了"))
+        }
+    });
+    p2.then(function (data) {
+        let c = x + y;
+        console.log(data);
+    }).then(function (data) {
+        let a = b + 1;
+    }).catch(function (err) { //一旦有抛出错误，.catch就会被立即执行
+        console.log(err);   //如果这里没有.catch，错误就得不到处理了
+    })
+
+</script>
+</body>
+
+</html>

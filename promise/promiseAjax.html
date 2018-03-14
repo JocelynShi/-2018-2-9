@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+    <script type="text/javascript">
+        const getJSON = function (url) {
+            const promise = new Promise(function (resolve,reject) {
+                const handler = function () {
+                    if(this.readyState !==4){
+                        return;
+                    }
+                    if(this.status ===200){
+                        resolve(this.response);
+                    }else{
+                        reject(new Error(this.statusText))
+                    }
+                };
+
+                const client = new XMLHttpRequest();
+                client.open("GET",url);
+                client.onreadystatechange=handler;
+                client.responseType="json";
+                client.setRequestHeader("Accept","application/json");
+                client.send();
+
+            });
+            return promise;
+        };
+        getJSON("js/posts.json").then(function (json) {
+            console.log('content:'+ json);
+            let p = new Promise(function (resolve,reject) {
+                setTimeout(function () {
+                    resolve("第二个Promise完成")
+                },5000)
+            })
+            return p;
+        },function (error) {
+                console.error("出错了",error);
+                let p = new Promise(function (resolve,reject) {
+                    setTimeout(function () {
+                        resolve("第二个Promise完成")
+                    },5000)
+                })
+            return p;
+        }).finally(function () {
+            console.log("completed")
+        })
+            //如果then里不return Promise对象实例，后面的then或者finally将会按照同步顺序执行，如果有返回Promise状态，则会等待状态变化后再执行
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

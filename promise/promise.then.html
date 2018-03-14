@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+    <script type="text/javascript">
+        let p= new Promise(function (resolve,reject) {
+            if(1===1){
+                resolve("ok");
+            }else{
+                reject(new Error("wrong"));
+            }
+        });
+       p.then(function (data) {
+           console.log("第一个then函数参数:",data);
+           return "第一个then函数执行完毕";
+       }).then(function (data) {
+           console.log("第二个then函数参数:",data);
+            return new Promise(function (reslove,reject) {
+                setTimeout(function () {
+                   if(2===2){
+                       reslove("第二个then函数执行成功");
+
+                   }else{
+                        reject(new Error("出错了"))
+                   }
+               },5000);
+            })
+
+       }).then(function (data) {
+           console.log("第三个then函数参数:",data)
+       },function (error) {
+           console.log("第三个then函数参数",error)
+       })
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

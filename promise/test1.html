@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+    <script type="text/javascript">
+      /*  !function () {
+            const promise = new Promise(function (resolve, reject) {
+                console.log("promise");
+                setTimeout(function () {
+                    if (1 === 2) {
+                        console.log("resolved");
+                        resolve("正确执行");
+                    } else {
+                        console.log("出错了")
+                        reject("出错了");
+                    }
+                },2000);
+            });
+            promise.then(function (data) {
+                console.log(data);
+                resolve("")
+            },function (error) {
+                console.log(error)
+            });
+            console.log("hello world");
+
+            //promise  Promise新建后立即执行，所以首先输出
+            //hello world  前面的同步代码执行完就执行
+            //resolved   因为在setTimeout里，所以要在所有同步代码执行完再执行
+            //正确执行   最后执行
+        }();*/
+
+
+
+         window.onload = function() {
+             function pms1() {
+                var test1 = new Promise(function(resolve, reject) {
+                     setTimeout(function() {
+                         console.log('执行任务1');
+                         resolve('执行任务1成功'); //resolve函数将promise对象的状态从“pending”变为‘resolved’;在异步操作成功时调用，并将异步的操作结果作为参数传递出去。
+                     }, 2000);
+                 });
+                return test1;
+             }
+
+             function pms2() {
+               return new Promise(function(resolve, reject) {
+                     setTimeout(function() {
+                         console.log('执行任务2');
+                         resolve('执行任务2成功');
+                     }, 2000);
+                 });
+             }
+
+             function pms3() {
+                return   new Promise(function(resolve, reject) {
+                     setTimeout(function() {
+                         console.log('执行任务3');
+                         resolve('执行任务3成功');
+                     }, 2000);
+                 });
+             }
+             pms1().then(function(data) {
+                     console.log('第1个回调：' + data);
+                     return pms2();
+                 })
+                 .then(function(data) {
+                     console.log('第2个回调：' + data);
+                     return pms3();
+                 })
+                 .then(function(data) {
+                     console.log('第3个回调：' + data);
+                     return '还没完！该结束了吧！'
+                 }).then(function(data) {
+                     console.log(data);
+                 });
+         }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

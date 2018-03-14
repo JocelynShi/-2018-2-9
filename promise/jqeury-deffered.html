@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>$.Deferred</title>
+	<meta charset="utf-8">
+	<script  src="js/jquery-3.1.0.min.js"></script>
+	<script>
+		$(function () {
+			function runAsyn() {
+				var def = $.Deferred();
+				setTimeout(function () {
+					def.resolve("随便什么数据")
+					console.log("执行完成");
+					
+				},2000)
+				return def.promise(); //返回一个受限的Deferred对象，即没有resolve、reject等方法，无法从外部改变他的状态
+			}
+
+			var pms = runAsyn();
+			pms.then(function (data) {
+				console.log(data);
+			})
+			pms.resolve("我穿越得了") //会报错
+		})
+	</script>
+</head>
+<body>
+
+</body>
+</html>

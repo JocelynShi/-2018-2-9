@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+</head>
+
+<body>
+<script type="text/javascript">
+
+    const p2 = new Promise(function (resolve, reject) {
+        if (1 === 1) {
+            resolve("ok")
+        } else {
+            reject(new Error("出错了"))
+        }
+    });
+    p2.then(function (data) {
+        let c = x + y;
+        console.log(data);
+    }).then(function (data) {
+        let a = b + 1;
+    }).catch(function (err) { //一旦有抛出错误，.catch就会被立即执行
+        console.log(err);   //如果这里没有.catch，错误就得不到处理了
+    }).finally(function () {
+        console.log("finally")
+    })
+
+</script>
+</body>
+
+</html>

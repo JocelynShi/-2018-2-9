@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Promise 学习笔记</title>
+    <script type="text/javascript">
+        var p= new Promise(function (resolve,reject) {
+            if(1===1){
+                resolve("ok");
+            }else{
+                reject(new Error("wrong"));
+            }
+        });
+        console.log(p.then);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
