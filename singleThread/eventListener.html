@@ -2,74 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>callback异步函数</title>
+    <title>异步模式-监听事件</title>
+    <script src="../js/jquery-3.1.0.min.js"></script>
 </head>
 <body>
 <script>
     (function () {
-            function f1(callback1,callback2) {
-                console.log("无延时执行f1");
-                callback1();
-                setTimeout(function () {
-                    callback2();
-                    console.log("延时后执行的f1");
+        var Event = {
+            // 通过on接口监听事件eventName
+            // 如果事件eventName被触发，则执行callback回调函数
+            on: function (eventName, callback) {
+                //你的代码
+                if(!this.handles){
+                    //this.handles={};
+                    Object.defineProperty(this, "handles", {
+                        value: {},
+                        enumerable: false,
+                        configurable: true,
+                        writable: true
+                    })
+                }
 
-                },5000)
+                if(!this.handles[eventName]){
+                    this.handles[eventName]=[];
+                }
+                this.handles[eventName].push(callback);
+            },
+            // 触发事件 eventName
+            emit: function (eventName) {
+                //你的代码
+                if(this.handles[arguments[0]]){
+                    for(var i=0;i<this.handles[arguments[0]].length;i++){
+                        this.handles[arguments[0]][i]();
+                    }
+                }
             }
-            
-            function f2() {
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-                console.log("执行f2");
-            }
-            function f3() {
-                console.log("执行f3");
-            }
-            function f4() {
-                console.log("执行f4");
-            }
-            f1(f2,f4);
-            f3();
+        };
+
+    var fn = $.extend({},Event);
+        function f1() {
+            console.log("执行f1");
+            setTimeout(function () {
+                //f1代码
+                fn.emit("done");
+            },5000)
+        }
+
+        function f2() {
+            console.log("执行f2")
+        }
+        f1();
+        fn.on("done",f2)
+
     })();
 
-    /**
-     * 执行结果
-     * 无延时执行f1
-     * 执行f3
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 执行f2
-     * 延时后执行的f1
-     */
 
-
-    /**
-     * JS的执行环境是"单线程"（single thread）
-     * 单线程就是指一次只能完成一个任务。如果有多个任务，就必须排队，不管前面的任务执行时间是多久，后面的任务都得等前面的任务执行完之后才可以执行，这样依次类推。
-     *  单线程分为“同步模式”和“异步模式”。默认是“同步模式”。
-     *  “同步模式”：后一个任务等待前一个任务结束，然后再执行，程序的执行顺序与任务的排列顺序是一致的、同步的。
-     *  “异步模式”：每个任务有一个或者多个回调函数（callback）,前一个任务结束后，不是执行后一个任务，而是执行回调函数，后一个任务则是不等前一个任务结束就执行，
-     *  所以程序的执行顺序与任务的排列顺序是不一致的、异步的。感觉“异步模式”有点像线上预约和线下排队，线上的预约已经挂起，到一定时间就可以去柜台办理业务，而线下的必须在大厅按照顺序一一排队。
-     *
-     * 上面的例子把同步操作变成了异步操作，f1不会堵塞程序运行，相当于先执行程序的主要逻辑，将耗时的操作推迟执行。
-     * 回调函数的优点是简单、容易理解和部署，缺点是不利于代码的阅读和维护，各部分之间高度耦合，流程会很混乱，而且每个任务只能指定一个回调函数。
-     *
-
-     */
 </script>
 </body>
 </html>

@@ -8,51 +8,59 @@
 <body>
 <script>
     (function () {
-        var Event = {
-            // 通过on接口监听事件eventName
-            // 如果事件eventName被触发，则执行callback回调函数
-            on: function (eventName, callback) {
-                //你的代码
-                if(!this.handles){
-                    //this.handles={};
-                    Object.defineProperty(this, "handles", {
-                        value: {},
-                        enumerable: false,
-                        configurable: true,
-                        writable: true
-                    })
-                }
+         class PubSub {
+            constructor() {
+                this.subscribers = {};
+            }
 
-                if(!this.handles[eventName]){
-                    this.handles[eventName]=[];
+            subscribe(type, fn) {
+                // todo subscribe
+                if(this.subscribers[type]) { //检查是否已经有这种订阅类型
+                    let typeFns = this.subscribers[type], len = typeFns ? typeFns.length : 0;
+                    while (len--) { //检查订阅类型里是否已经有一样的处理方法
+                        if (typeFns[len] === fn) {
+                            return;
+                        }
+                    }
+                    this.subscribers[type].push(fn);
+                    return; //因为已经添加了对应的方法，所以不需要向下执行了。
                 }
-                this.handles[eventName].push(callback);
-            },
-            // 触发事件 eventName
-            emit: function (eventName) {
-                //你的代码
-                if(this.handles[arguments[0]]){
-                    for(var i=0;i<this.handles[arguments[0]].length;i++){
-                        this.handles[arguments[0]][i]();
+                this.subscribers[type]=[fn]; //如果subscribers没有type属性，则创建type属性并把fn赋值给type。
+            }
+
+            unsubscribe(type, fn) {
+                // todo unsubscribe  //原理和添加订阅一样的
+                let typeFns = this.subscribers[type] || [], len= typeFns ? typeFns.length : 0;
+                while (len--){
+                    if(typeFns[len] === fn){
+                        return typeFns.splice(len,1)
                     }
                 }
+
             }
-        };
 
-    var fn = $.extend({},Event);
-        function f1() {
-            console.log("执行f1");
-            setTimeout(function () {
-                //f1代码
-                fn.emit("done");
-            },5000)
+            publish(type, ...args) {
+                // todo publish
+                let typeFns = this.subscribers[type] || [],len= typeFns ? typeFns.length:0;
+                while (len--){
+                    typeFns[len].apply(this,args);
+                }
+
+            }
+
         }
 
-        function f2() {
-            console.log("执行f2")
-        }
-        f1();
-        fn.on("done",f2)
+        let ob = new PubSub();
+         function f1() {
+             console.log("执行f1")
+         }
+         function f2() {
+             console.log("执行f2")
+         }
+         ob.subscribe("add", f1);
+        ob.subscribe("add", f2);
+        ob.unsubscribe("add",f1);
+        ob.publish("add",1,2,3);
 
     })();
 

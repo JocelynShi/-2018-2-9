@@ -9,10 +9,11 @@
     (function () {
             function f1(callback1,callback2) {
                 console.log("无延时执行f1");
+                callback1();
                 setTimeout(function () {
-                    callback1();
-                    console.log("延时后执行的f1");
                     callback2();
+                    console.log("延时后执行的f1");
+
                 },5000)
             }
             
