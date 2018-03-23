@@ -153,7 +153,7 @@ JavaScript语言设计者意识到，这时主线程完全可以不管IO设备�
 
  Event.emit("done")表示触发Event对象的done事件，从而开始执行f2.  
 这种方法的有点比较容易理解，可以绑定多个事件，每个事件可以指定多个回调函数，而且可以“去耦合”（Decoupling）,有利于实现模块化。缺点是整个程序都要变成事件驱动型，运行流程变得很不清晰。  
-###[ 5.3 发布/订阅](./publishSubscribe.html)
+### [ 5.3 发布/订阅](./publishSubscribe.html)
 
 上一节的"事件"，完全可以理解成"信号"。  
 我们假定存在一个“信号中心”，某个任务完成，就向信号“发布”（publish)一个信号，其它任务可以向信号中心“订阅”（subscribe）这个信号，从而知道什么时候自己可以开始执行。这就叫做“发布/订阅模式”（publish-subsribe pattern）,又称“观察者模式”（observer pattern）。  
