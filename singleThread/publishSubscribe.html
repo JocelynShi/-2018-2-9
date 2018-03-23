@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步模式-监听事件</title>
+    <script src="../js/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+<script>
+    (function () {
+        var Event = {
+            // 通过on接口监听事件eventName
+            // 如果事件eventName被触发，则执行callback回调函数
+            on: function (eventName, callback) {
+                //你的代码
+                if(!this.handles){
+                    //this.handles={};
+                    Object.defineProperty(this, "handles", {
+                        value: {},
+                        enumerable: false,
+                        configurable: true,
+                        writable: true
+                    })
+                }
+
+                if(!this.handles[eventName]){
+                    this.handles[eventName]=[];
+                }
+                this.handles[eventName].push(callback);
+            },
+            // 触发事件 eventName
+            emit: function (eventName) {
+                //你的代码
+                if(this.handles[arguments[0]]){
+                    for(var i=0;i<this.handles[arguments[0]].length;i++){
+                        this.handles[arguments[0]][i]();
+                    }
+                }
+            }
+        };
+
+    var fn = $.extend({},Event);
+        function f1() {
+            console.log("执行f1");
+            setTimeout(function () {
+                //f1代码
+                fn.emit("done");
+            },5000)
+        }
+
+        function f2() {
+            console.log("执行f2")
+        }
+        f1();
+        fn.on("done",f2)
+
+    })();
+
+
+</script>
+</body>
+</html>
